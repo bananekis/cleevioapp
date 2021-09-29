@@ -32,7 +32,9 @@ export const CardTrip = (props: Props) => {
             </DivFlagBiggerText>
             <PTitleCard>Company</PTitleCard>
             <PCompanyName>{t.company_name}</PCompanyName>
-            <P>{`${t.address.street} ${t.address.street_num}, ${t.address.zip}`}</P>
+            <P>
+              {t.address.street} {t.address.street_num}, {t.address.zip}
+            </P>
             <P>{t.address.city}</P>
             <PTitleCard>Date</PTitleCard>
             <P>{`${moment(t.start_date).format("MMMM D")} - ${moment(

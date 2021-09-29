@@ -57,8 +57,8 @@ export const DatePicker = (props: Props) => {
         onFocusChange={(focusedInput) => {
           dispatch({ type: "focusChange", payload: focusedInput });
         }}
-        date={props.date} // Date or null
-        showDatepicker={state.showDatepicker} // Boolean
+        date={props.date}
+        showDatepicker={state.showDatepicker}
         displayFormat="yyyy-MM-dd"
         minBookingDate={moment().toDate()}
       />

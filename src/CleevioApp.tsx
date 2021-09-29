@@ -621,7 +621,7 @@ function CleevioApp() {
         <Footer>
           <IFooter>Developed by</IFooter>
           <PFooter>Lukáš Novák</PFooter>
-          <a href="https://github.com/bananekis/react-abs">
+          <a href="https://github.com/bananekis/cleevioapp">
             <img src={github}></img>
           </a>
         </Footer>
