@@ -5,6 +5,8 @@
 This app was created to view and book upcoming/past trips. All data are stored in API which requires `Bearer token` in every API call. Fully responzive.
 Required fields with handling server errors included.
 
+`.env config needs to be filled in by yourself`
+
 ## Homepage
 
 Simple formular where user needs to fill out every feild so he can book his trip
