@@ -73,7 +73,7 @@ const DivThird = styled.div`
   justify-content: center;
 
   @media (max-width: 768px) {
-    position: relative;
+    position: relative !important;
     padding: 10px 0;
     width: 100%;
   }
