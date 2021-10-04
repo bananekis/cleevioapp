@@ -32,7 +32,7 @@ export const validate = (
   } else if (form.address.zip === "") {
     setErrors((p) => ({ ...p, zipError: true }));
     return false;
-  } else if (form.covid_test_date === "") {
+  } else if (form.covid === true && form.covid_test_date === "") {
     setErrors((p) => ({ ...p, covidDateError: true }));
     return false;
   }

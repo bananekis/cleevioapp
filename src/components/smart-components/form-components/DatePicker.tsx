@@ -1,7 +1,7 @@
 import { DateSingleInput } from "@datepicker-react/styled";
 import { OnDateChangeProps } from "@datepicker-react/styled";
 import { ThemeProvider } from "styled-components";
-import { color } from "../config";
+import { color } from "../../../config";
 import { useReducer } from "react";
 import moment from "moment";
 
@@ -30,10 +30,10 @@ export const DatePicker = (props: Props) => {
           daySize: [36, 40],
           fontFamily: "system-ui, -apple-system",
           colors: {
-            accessibility: `${color.gold}`,
-            selectedDay: `${color.gold}`,
-            selectedDayHover: `${color.gold}`,
-            primaryColor: `${color.gold}`,
+            accessibility: `${color.black}`,
+            selectedDay: `${color.black}`,
+            selectedDayHover: `${color.black}`,
+            primaryColor: `${color.black}`,
           },
           inputPadding: "5px",
           inputWidth: "90%",
@@ -45,7 +45,7 @@ export const DatePicker = (props: Props) => {
           inputCalendarIconHeight: "13px",
           inputFontSize: "15px",
           dayHoverColor: `${color.white}`,
-          dayHoverBackground: `${color.deepOcean}`,
+          dayHoverBackground: `${color.black}`,
           inputLabelBorder: `${props.border}`,
         },
       }}

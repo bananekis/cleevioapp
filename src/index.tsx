@@ -1,7 +1,7 @@
 import "./index.css";
 import { Provider as AlertProvider } from "react-alert";
 import { alertOptions } from "./config";
-import CleevioApp from "./CleevioApp";
+import CleevioApp from "./main-app/CleevioApp";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";

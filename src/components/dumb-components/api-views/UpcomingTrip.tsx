@@ -1,25 +1,30 @@
+import { DivCard, DivCardError } from "./CardTrip";
+import { DivFlagBiggerTextTable } from "../../smart-components/form-components/SelectBox";
 import {
-  DivCard,
-  DivCardError,
-  DivFlagBiggerTextTable,
   DivFlagDate,
   DivTableInfo,
   DivTableInfoWrapper,
-  P,
   PCompanyNameTable,
-} from "../CleevioApp";
-import { FlagText } from "./FlagText";
+} from "./PastTrip";
+import { FlagText } from "../flags/FlagText";
+import { P } from "../../../main-app/CleevioApp";
 import { ReactSVG } from "react-svg";
-import { Trip } from "../types";
+import { Trip } from "../../../types";
 import { countries } from "country-data";
-import { shorten } from "../functions/shortText";
+import { shorten } from "../../../functions/shortText";
 import FadeIn from "react-fade-in";
-import cross from "../assets/cross.svg";
+import cross from "../../../assets/cross.svg";
 import moment from "moment";
+
+import { FlagTextTable } from "../flags/FlagTextTable";
+
+// props
 
 type Props = {
   trips: Trip;
 };
+
+// component
 
 export const UpcomingTrip = (props: Props) => {
   const upcomingT = props.trips.filter((value) => {
@@ -35,9 +40,10 @@ export const UpcomingTrip = (props: Props) => {
           <DivCard key={t.id}>
             <DivFlagDate>
               <DivFlagBiggerTextTable>
-                <FlagText
+                <FlagTextTable
                   countryCode={t.address.country}
                   country={countries[t.address.country.toUpperCase()].name}
+                  company={t.company_name}
                 />
               </DivFlagBiggerTextTable>
 
@@ -46,7 +52,6 @@ export const UpcomingTrip = (props: Props) => {
                   t.end_date
                 ).format("MMMM D, YYYY")}`}</P>
                 <DivTableInfo>
-                  <PCompanyNameTable>{t.company_name}</PCompanyNameTable>
                   <P>
                     {shorten(
                       `${t.address.street} ${t.address.street_num}, ${t.address.zip}, ${t.address.city}`

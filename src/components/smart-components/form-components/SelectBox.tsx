@@ -1,17 +1,44 @@
-import { Country, LangOptions } from "../types";
-import { DivFlagText, DivSelect } from "../CleevioApp";
-import { FancyPlaceholder } from "../views/FancyPlaceholder";
-import { FlagText } from "../views/FlagText";
-import { bearerAuth, url } from "../config";
-import { customTheme } from "../functions/customTheme";
-import { handleError } from "../functions/handleErrors";
+import { Country, LangOptions } from "../../../types";
+import { FancyPlaceholder } from "../../dumb-components/flags/FancyPlaceholder";
+import { FlagText } from "../../dumb-components/flags/FlagText";
+import { bearerAuth, color, url } from "../../../config";
+import { customTheme } from "../../../functions/customTheme";
+import { handleError } from "../../../functions/handleErrors";
 import { useAlert } from "react-alert";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import axios from "axios";
+import styled from "styled-components";
 import styles from "react-select";
 
+// styles
+
+const DivFlagText = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const DivFlagBiggerText = styled(DivFlagText)`
+  font-size: 22px;
+`;
+export const DivFlagBiggerTextTable = styled(DivFlagBiggerText)`
+  margin-right: 1.5em;
+  font-size: 18px;
+  font-weight: 600;
+  align-items: flex-start;
+
+  & > img {
+    font-size: 50px;
+  }
+`;
+const DivSelect = styled.div`
+  color: ${color.black};
+  width: 95%;
+  margin: 0 auto;
+  text-align: left;
+`;
+
 // props
+
 type Props = {
   onChange: (newValue: Country) => void;
   option: (data: LangOptions) => void;
@@ -20,6 +47,7 @@ type Props = {
 };
 
 // component
+
 const SelectBox = (props: Props) => {
   const [options, setOptions] = useState<readonly Country[]>([]);
   const alert = useAlert();

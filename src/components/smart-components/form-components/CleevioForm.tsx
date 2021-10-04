@@ -1,32 +1,130 @@
-import {
-  Button,
-  DivButton,
-  DivCovid,
-  DivDate,
-  DivForm,
-  DivInfo,
-  DivSelectBox,
-  I,
-  Input,
-  Label,
-  LabelCovid,
-  SpanSVG,
-  SpanTextButton,
-  Strong,
-} from "../CleevioApp";
-import { Country, Errors, Formular, LangOptions } from "../types";
+import { Button } from "../../../main-app/CleevioApp";
+import { Country, Errors, Formular, LangOptions } from "../../../types";
 import { DatePicker } from "./DatePicker";
 import { OnDateChangeProps } from "@datepicker-react/styled";
 import { RadioButtons } from "./RadioButtons";
-import { ReactComponent as TickSVG } from "../assets/tick.svg";
-import { bearerAuth, url } from "../config";
-import { formatDate } from "../functions/formatDate";
-import { handleError } from "../functions/handleErrors";
+import { ReactComponent as TickSVG } from "../../../assets/tick.svg";
+import { bearerAuth, color, url } from "../../../config";
+import { formatDate } from "../../../functions/formatDate";
+import { handleError } from "../../../functions/handleErrors";
 import { useAlert } from "react-alert";
-import { validate } from "../functions/validateForm";
+import { validate } from "../../../functions/validateForm";
 import React, { useState } from "react";
 import SelectBox from "./SelectBox";
 import axios from "axios";
+import styled from "styled-components";
+
+// styles
+
+const DivInfo = styled.div`
+  padding: 20px;
+  background-color: ${color.ghostWhite};
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+
+  @media (max-width: 1024px) {
+    width: 75%;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 480px) {
+    width: 80%;
+  }
+`;
+
+const DivCovid = styled(DivInfo)`
+  margin-top: 2em;
+  margin-bottom: 2em;
+  text-align: left;
+`;
+
+const DivButton = styled(DivCovid)`
+  background: none;
+`;
+
+const DivDate = styled(DivInfo)`
+  margin-bottom: 2em;
+`;
+
+const DivSelectBox = styled(DivDate)``;
+
+const DivForm = styled.div`
+  margin: 0 auto 1em auto;
+  width: 100%;
+
+  & > div {
+    width: 95%;
+    margin: 0 auto;
+  }
+  & > div > label > div {
+    top: 12px;
+    left: 10px;
+  }
+  & > div > label > div + input {
+    @media (max-width: 768px) {
+      margin-left: 1em;
+    }
+  }
+  & > div > label + div {
+    z-index: 99;
+  }
+`;
+
+const I = styled.i`
+  color: ${color.red};
+`;
+
+const Input = styled.input`
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  width: 90%;
+  transition: all 0.2s ease-in-out;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  &::-webkit-input-placeholder {
+    font-size: 15px;
+  }
+  &:-ms-input-placeholder {
+    font-size: 15px;
+  }
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 1em;
+  text-align: left;
+`;
+
+const LabelCovid = styled(Label)`
+  @media (max-width: 480px) {
+    font-size: 0.8em;
+  }
+`;
+
+export const SpanSVG = styled.span`
+  line-height: 0;
+`;
+
+export const SpanTextButton = styled.span`
+  padding-left: 5px;
+`;
+
+const Strong = styled.strong`
+  color: ${color.black};
+`;
 
 // props
 
@@ -73,6 +171,7 @@ const CleevioForm = (props: Props) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [covidDate, setCovidDate] = useState<Date | null>(null);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<LangOptions | null>(
     null
   );
@@ -80,11 +179,14 @@ const CleevioForm = (props: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (disabled === true) return;
+
     setErrors(errorState);
 
     const isValid = validate(form, setErrors);
 
     if (isValid) {
+      setDisabled(true);
       const sendForm = () => {
         axios
           .post(url.trip, form, bearerAuth)
@@ -95,6 +197,7 @@ const CleevioForm = (props: Props) => {
             setEndDate(null);
             setCovidDate(null);
             setSelectedOption(null);
+            setDisabled(false);
             props.onCreate();
           })
           .catch((err) => handleError(err, alert));
@@ -212,13 +315,13 @@ const CleevioForm = (props: Props) => {
   // render red outline on error
 
   const startBorder: string =
-    errors.startDateError !== false ? "2px solid red" : "";
+    errors.startDateError !== false ? "2px solid red" : "none";
   const endBorder: string =
-    errors.endDateError !== false ? "2px solid red" : "";
+    errors.endDateError !== false ? "2px solid red" : "none";
   const covidBorder: string =
-    errors.covidDateError !== false ? "2px solid red" : "";
+    errors.covidDateError !== false ? "2px solid red" : "none";
   const selectBorder: string =
-    errors.countryError !== false ? "2px solid red" : "";
+    errors.countryError !== false ? "2px solid red" : "none";
 
   // view
 
@@ -359,20 +462,25 @@ const CleevioForm = (props: Props) => {
           </LabelCovid>
           <RadioButtons onChange={radioOnChange} />
         </DivCovid>
-        <DivDate>
-          <DivForm>
-            <Label>
-              Date of receiving test results{" "}
-              {errors.covidDateError !== false ? <I>required</I> : ""}
-            </Label>
+        {form.covid === true ? (
+          <DivDate>
+            <DivForm>
+              <Label>
+                Date of receiving test results{" "}
+                {errors.covidDateError !== false ? <I>required</I> : ""}
+              </Label>
 
-            <DatePicker
-              onChange={covidDateOnChange}
-              date={covidDate}
-              border={covidBorder}
-            />
-          </DivForm>
-        </DivDate>
+              <DatePicker
+                onChange={covidDateOnChange}
+                date={covidDate}
+                border={covidBorder}
+              />
+            </DivForm>
+          </DivDate>
+        ) : (
+          ""
+        )}
+
         <DivButton>
           <Button type="submit">
             <SpanTextButton>Save</SpanTextButton>

@@ -3,15 +3,15 @@ import { positions, transitions } from "react-alert";
 // URL config
 
 export const url = {
-  countries: "https://task-devel.cleevio-vercel.vercel.app/api/country",
-  trip: "https://task-devel.cleevio-vercel.vercel.app/api/trip",
+  countries: `${process.env.REACT_APP_URL_COUNTRIES}`,
+  trip: `${process.env.REACT_APP_URL_TRIP}`,
 };
 
 // Bearer token auth config
 
 export const bearerAuth = {
   headers: {
-    Authorization: "Bearer GtbcdUCZqkkjtDqlCGLB",
+    Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
     Accept: "application/json",
   },
 };
@@ -20,11 +20,12 @@ export const color = {
   khaki: "#f8d964",
   gold: "#fec527",
   black: "#000",
-  lightBlack: "#000000a9",
+  lightBlack: "#97999B",
   white: "#fff",
   navy: "#2b303a7d",
   deepOcean: "#282c34",
   red: "#ff0000",
+  ghostWhite: "#f9f9fa",
 };
 
 // alert config

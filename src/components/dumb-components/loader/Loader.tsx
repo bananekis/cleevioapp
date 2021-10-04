@@ -1,5 +1,11 @@
-import { DivLoader } from "../CleevioApp";
-import loader from "../assets/loader.gif";
+import loader from "../../../assets/loader.gif";
+import styled from "styled-components";
+
+// styles
+
+const DivLoader = styled.div`
+  text-align: center;
+`;
 
 // component
 
